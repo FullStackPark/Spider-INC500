@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 sudo mkdir temp
 sudo mkdir temp/html
-sudo mkdir temp/INC500_company_details
-sudo mkdir temp/wikipedia_list
+sudo mkdir temp/html/INC500_company_details
+sudo mkdir temp/html/wikipedia_list
 sudo mkdir output
 sudo mkdir output/wikipedia_search
 
