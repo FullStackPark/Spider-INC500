@@ -37,6 +37,7 @@ cd Scrapping-INC500/INC500LIST/
 ```
 ### Install Dependencies:
 > We will compile and install python3.6 and docker.io, since the python apt repo doen't work well with Scrapy
+
 ```sudo bash dependencies.sh```
 
 ### Run Scrapper:
