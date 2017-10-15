@@ -4,7 +4,7 @@
 
 > Target(目标): https://www.inc.com/inc5000/list/2017
 
-INC500 Spider Scrap all the company informations from the target then save it into a excel file, so that you can analysis the INC500 companies (actually 5000 are scrapped) company informations. 
+INC500 Spider Scrap all the company detail informations from the target then save it to an excel file, so that you can analysis these information across the INC500 companies (actually 5000 companies will be scrapped)。
 
 ## Scrapped Title:
 * CompanyID
