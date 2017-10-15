@@ -33,7 +33,7 @@ INC500 Spider Scrap all the company informations from the target then save it in
 ### Clone Repository
 ```
 git clone https://github.com/XetRAHF/Scrapping-INC500.git
-cd INC500LIST
+cd Scrapping-INC500/INC500LIST/
 ```
 ### Install Dependencies:
 > We will compile and install python3.6 and docker.io, since the python apt repo doen't work well with Scrapy
