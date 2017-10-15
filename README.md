@@ -32,7 +32,7 @@ INC500 Spider Scrap all the company informations from the target then save it in
 ## Getting Started
 ### Clone Repository
 ```
-git clone 
+git clone https://github.com/XetRAHF/Scrapping-INC500.git
 cd INC500LIST
 ```
 ### Install Dependencies:
