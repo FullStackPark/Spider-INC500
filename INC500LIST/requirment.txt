@@ -1,0 +1,6 @@
+scrapy
+scrapy-splash
+bs4
+jellyfish
+numpy
+requests
