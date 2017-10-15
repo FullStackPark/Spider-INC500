@@ -13,5 +13,8 @@ sudo make altinstall
 sudo pip3.6 -V
 sudo pip3.6 install -r requirment.txt
 
+sudo rm -rf Python-3.6.2 
+sudo rm -rf Python-3.6.2.tgz
+
 echo Congratulations! All Dependencies had been successfully installed ^vv^
 
