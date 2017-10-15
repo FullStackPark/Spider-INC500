@@ -40,17 +40,17 @@ cd Scrapping-INC500/INC500LIST/
 sudo bash 
 
 ```sudo bash dependencies.sh```
-###Run Scrapper:
+### Run Scrapper:
 ```sudo bash start.sh```
 
-###Checkout Result:
+### Checkout Result:
 Results are placed inside the `output` folder.
 
 ## Compatibility
 
 Tested on Ubuntu-16.04 x64.
 
-##Screenshots
+## Screenshots
 
 
 ## Contact
