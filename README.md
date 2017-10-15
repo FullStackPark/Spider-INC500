@@ -60,5 +60,5 @@ Tested on Ubuntu-16.04 x64.
 
 ##Acknowledgments
 - My Partner - ZePing Bai - Technology Support - Connect him on QQ by QR:
-![ZePing Bai]()
+![ZePing Bai](https://raw.githubusercontent.com/XetRAHF/Scrapping-INC500/master/IMGS/zepingbai.jpg)
 - Join our QQ technology forum: ```560956108```
