@@ -36,7 +36,7 @@ git clone https://github.com/XetRAHF/Scrapping-INC500.git
 cd Scrapping-INC500/INC500LIST/
 ```
 ### Install Dependencies:
-> We will compile and reinstall python3.6 and docker, since the python apt repo doen't work well with Scrapy
+> We will compile and reinstall Python3.6 and Docker, since the python apt repo doen't work well with Scrapy
 
 ```
 sudo bash dependencies.sh
