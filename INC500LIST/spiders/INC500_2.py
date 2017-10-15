@@ -59,8 +59,8 @@ class INC500_2(scrapy.Spider):
     def callback_detail_page(self, response):
         """Write Company Profile page to file_path"""
         file_path = "temp/html/INC500_company_details/" + self.company_url + '.html'
-        f = open(file=file_path, encoding="utf-8", mode="w")
-        f.write(response.text)
+        f = open(file=file_path, mode="wb")
+        f.write(response.body)
         f.close()
 
         """Append the file info to json description file"""
@@ -77,8 +77,8 @@ class INC500_2(scrapy.Spider):
     def callback_wiki_page(self, response):
         """Write Wikipedia Search Result Page to file_path"""
         file_path = "temp/html/wikipedia_list/" + self.company_url + '.html'
-        f = open(file=file_path, encoding="utf-8", mode="w")
-        f.write(response.text)
+        f = open(file=file_path, mode="wb")
+        f.write(response.body)
         f.close()
 
         """Append the file info to json description file"""

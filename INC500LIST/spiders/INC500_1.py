@@ -26,9 +26,9 @@ class INC500_1(scrapy.Spider):
         except:
             YDHP_ScrapySystem.ScrapySystem.what_the_fxxk("This response is not a json anymore, update the INC500_1 spider")
 
-        with open("temp/INC500_1.json", mode='wb') as f:
-            # f.write(json.dumps(json_response).encode("utf-8"))
-            f.write(response.body)
+        with open("temp/INC500_1.json", encoding='utf-8', mode='w') as f:
+            f.write(json.dumps(json_response))
+
         YDHP_ScrapySystem.ScrapySystem.spider_work_finished(self.name)
 
     def __init__(self):
