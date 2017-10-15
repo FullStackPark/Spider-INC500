@@ -4,3 +4,4 @@ bs4
 jellyfish
 numpy
 requests
+xlsxwriter
