@@ -8,7 +8,7 @@ NEWSPIDER_MODULE = 'INC500LIST.spiders'
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
 
-SPLASH_URL = 'http://45.32.70.135:8050'
+SPLASH_URL = 'http://127.0.0.1:8050'
 
 SPIDER_MIDDLEWARES = {
 	'scrapy_splash.SplashDeduplicateArgsMiddleware':100,
