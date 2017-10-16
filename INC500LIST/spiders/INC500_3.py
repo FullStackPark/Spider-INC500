@@ -5,6 +5,7 @@ import json
 from scrapy.selector import Selector
 import logging
 import time
+import copy
 
 output_companies = list()
 
@@ -118,7 +119,7 @@ class INC500_3:
                     if len(Selector(text=html).xpath(self.xpath_location).extract()) > 0:
                         cs.company_schema['Location'] = Selector(text=html).xpath(self.xpath_location).extract()[0]
 
-            output_companies.append(cs.company_schema)
+            output_companies.append(copy.deepcopy(cs.company_schema))
 
             # For Debug purpose
             print(str(cs.company_schema['Ranking']) + "` " + "Finished information collecting stage")
