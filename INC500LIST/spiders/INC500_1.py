@@ -19,10 +19,7 @@ class INC500_1(scrapy.Spider):
     def callback_parse(self, response):
         global json_response
         try:
-            bs_obj = BeautifulSoup(response.text, 'lxml')
-            for json_level in bs_obj.findAll('pre'):
-                json_text = json_level.get_text()
-                json_response = json.loads(json_text)
+            json_response = json.loads(response.text)
         except:
             YDHP_ScrapySystem.ScrapySystem.what_the_fxxk("This response is not a json anymore, update the INC500_1 spider")
 
