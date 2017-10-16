@@ -1,5 +1,5 @@
 import scrapy
-from . import YDHP_ScrapySystem, YDHP_SiteInfo
+from . import YDHP_ScrapySystem
 
 """No JS Renderer"""
 

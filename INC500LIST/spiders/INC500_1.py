@@ -1,7 +1,7 @@
 """Created by xetra f han"""
 """Download the json string from INC 500 Website"""
 
-from ..Extension import YDHP_SplashRequester, YDHP_ScrapySystem, YDHP_ScrapyRequester
+from ..Extension import YDHP_ScrapySystem, YDHP_ScrapyRequester
 import scrapy
 import json
 from bs4 import BeautifulSoup
