@@ -92,7 +92,7 @@ class INC500_3:
 
             for wikipedia_detail in self.companies_info['wikipedias']:
                 if str(company['id']) == str(wikipedia_detail['company_id']):
-                    cs.company_schema['WikipediaPage'] = company['url'] + '.html'
+                    cs.company_schema['WikipediaPage'] = str(company['url']) + '.html'
                     cs.company_schema['WikipediaURL'] = wikipedia_detail['wikipedia_url']
 
             for company_profile in self.companies_info['inc_500_company_details']:
