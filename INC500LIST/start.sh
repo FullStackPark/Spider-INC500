@@ -6,7 +6,7 @@ sudo mkdir temp/html/wikipedia_list
 sudo mkdir output
 sudo mkdir output/wikipedia_search
 
-
+#sudo docker run -p 8050:8050 -d scrapinghub/splash
 sudo scrapy crawl INC500_1
 sudo scrapy crawl INC500_2
 sudo python3.6 spider/INC500_3.py
