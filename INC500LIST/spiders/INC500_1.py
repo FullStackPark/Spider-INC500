@@ -1,7 +1,7 @@
 """Created by xetra f han"""
 """Download the json string from INC 500 Website"""
 
-from ..Extension import YDHP_SplashRequester, YDHP_ScrapySystem
+from ..Extension import YDHP_SplashRequester, YDHP_ScrapySystem, YDHP_ScrapyRequester
 import scrapy
 import json
 from bs4 import BeautifulSoup
@@ -14,7 +14,7 @@ class INC500_1(scrapy.Spider):
     target_url = "https://www.inc.com/inc5000list/json/inc5000_2017.json"
 
     def start_requests(self):
-        yield self.splash_requester.splash_requests(self.target_url, self.callback_parse)
+        yield self.scrapy_requester.scrapy_requests(self.target_url, self.callback_parse)
 
     def callback_parse(self, response):
         global json_response
@@ -33,4 +33,4 @@ class INC500_1(scrapy.Spider):
 
     def __init__(self):
         super(INC500_1, self).__init__()
-        self.splash_requester = YDHP_SplashRequester.SplashRequester()
+        self.scrapy_requester = YDHP_ScrapyRequester.ScrapyRequester()

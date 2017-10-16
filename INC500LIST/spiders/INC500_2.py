@@ -4,7 +4,7 @@
 """Save them to 'temp/html/wikipedia_list' and 'temp/html/INC500_company_details' respectively"""
 """Save json description file to temp/INC500_2.json"""
 
-from ..Extension import YDHP_SplashRequester, YDHP_ScrapySystem
+from ..Extension import YDHP_SplashRequester, YDHP_ScrapySystem, YDHP_ScrapyRequester
 import scrapy
 import json
 import logging
@@ -27,7 +27,7 @@ class INC500_2(scrapy.Spider):
 
     def __init__(self):
         super(INC500_2, self).__init__()
-        self.splash_requester = YDHP_SplashRequester.SplashRequester()
+        self.scrapy_requester = YDHP_ScrapyRequester.ScrapyRequester()
 
         """Read Json Company List from the last spider"""
         with open(file="temp/INC500_1.json", encoding="utf-8", mode="r") as f:
@@ -43,7 +43,7 @@ class INC500_2(scrapy.Spider):
 
             """Request the company profile (detail page)"""
             target = "http://www.inc.com/profile/" + self.company_url
-            yield self.splash_requester.splash_requests(target, self.callback_detail_page)
+            yield self.scrapy_requester.scrapy_requests(target, self.callback_detail_page)
 
             """Request the wikipedia search page (search the company-name on wikipedia)"""
             wiki_query = {
@@ -51,7 +51,7 @@ class INC500_2(scrapy.Spider):
                 , "example_query": "theneedleand"
             }
             target = wiki_query["example_url"].replace(wiki_query["example_query"], self.company_name)
-            yield self.splash_requester.splash_requests(target, self.callback_wiki_page)
+            yield self.scrapy_requester.scrapy_requests(target, self.callback_wiki_page)
 
             """We will go on to the next company"""
             logging.info("Company id: `" + self.company_rank + "` Finished Download")
