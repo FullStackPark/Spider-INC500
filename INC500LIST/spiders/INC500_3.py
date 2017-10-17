@@ -106,43 +106,79 @@ class INC500_3:
                 cs.company_schema['WikipediaPage'] = str(company['url']) + '.html'
                 cs.company_schema['WikipediaURL'] = wikipedia_detail['wikipedia_url']
 
-        for html in INC500_profiles:
-            articles = Selector(text=html).xpath(self.xpath_article).extract()
-
-            for article in articles:
-                ranking = Selector(text=article).xpath(self.xpath_ranking).extract_first()
-                if ranking is not None:
-                    ranking = str(ranking).replace('#', '')
-
-                    if str(ranking) == str(company['rank']):
-                        print('mmp')
-                        cs.company_schema['BriefDescription'] = Selector(text=article).xpath(
-                            self.xpath_brief_description).extract_first()
-                        cs.company_schema['Description'] = Selector(text=article).xpath(
-                            self.xpath_description).extract_first()
-                        cs.company_schema['Leadership'] = Selector(text=article).xpath(
-                            self.xpath_leadership).extract_first()
-                        cs.company_schema['Founded'] = Selector(text=article).xpath(
-                            self.xpath_founded).extract_first()
-                        cs.company_schema['ThreeYearGrowth'] = Selector(text=article).xpath(
-                            self.xpath_3_year_growth).extract_first()
-                        cs.company_schema['Employees'] = Selector(text=article).xpath(
-                            self.xpath_employees).extract_first()
-                        cs.company_schema['Website'] = Selector(text=article).xpath(
-                            self.xpath_company_website).extract_first()
-                        cs.company_schema['Location'] = Selector(text=article).xpath(
-                            self.xpath_location).extract_first()
-
         output_companies.append(copy.deepcopy(cs.company_schema))
 
         # For Debug purpose
-        print(str(cs.company_schema['Ranking']) + "` " + "Finished information collecting stage")
+        print(str(cs.company_schema['Ranking']) + "` " + "Finished profile dict initialization")
+
+    def append_company_profile(self, html):
+        output_total = len(output_companies)
+        articles = Selector(text=html).xpath(self.xpath_article).extract()
+        for article in articles:
+            ranking = Selector(text=article).xpath(self.xpath_ranking).extract_first()
+            if ranking is not None:
+                ranking = str(ranking).replace('#', '')
+
+                for index in range(0, output_total-1):
+                    if str(ranking) == str(output_companies[index]['Ranking']):
+                        print('Appending Company `' + str(ranking) + '` profile')
+
+                        if Selector(text=article).xpath(
+                            self.xpath_brief_description).extract_first() == None:
+                            print("Brief None")
+                        output_companies[index]['BriefDescription'] = Selector(text=article).xpath(
+                            self.xpath_brief_description).extract_first()
+
+                        if Selector(text=article).xpath(
+                            self.xpath_description).extract_first() == None:
+                            print("Description None")
+                        output_companies[index]['Description'] = Selector(text=article).xpath(
+                            self.xpath_description).extract_first()
+
+                        if Selector(text=article).xpath(
+                            self.xpath_leadership).extract_first() == None:
+                            print("Leadership None")
+                        output_companies[index]['Leadership'] = Selector(text=article).xpath(
+                            self.xpath_leadership).extract_first()
+
+                        if Selector(text=article).xpath(
+                            self.xpath_founded).extract_first() == None:
+                            print("Founded None")
+                        output_companies[index]['Founded'] = Selector(text=article).xpath(
+                            self.xpath_founded).extract_first()
+
+                        if Selector(text=article).xpath(
+                            self.xpath_3_year_growth).extract_first() == None:
+                            print("ThreeYearGrowth None")
+                        output_companies[index]['ThreeYearGrowth'] = Selector(text=article).xpath(
+                            self.xpath_3_year_growth).extract_first()
+
+                        if Selector(text=article).xpath(
+                            self.xpath_employees).extract_first() == None:
+                            print("Employees None")
+                        output_companies[index]['Employees'] = Selector(text=article).xpath(
+                            self.xpath_employees).extract_first()
+
+                        if Selector(text=article).xpath(
+                            self.xpath_company_website).extract_first() == None:
+                            print("Website None")
+                        output_companies[index]['Website'] = Selector(text=article).xpath(
+                            self.xpath_company_website).extract_first()
+                        
+                        if Selector(text=article).xpath(
+                            self.xpath_location).extract_first() == None:
+                            print("Location None")
+                        output_companies[index]['Location'] = Selector(text=article).xpath(
+                            self.xpath_location).extract_first()
 
     def start_extraction(self):
         """Initialize output companies according to the result of spider 1"""
-        threads = list()
         for company in self.companies:
-            threads += [threading.Thread(target=self.extract_company, args=(company))]
+            self.extract_company(company)
+
+        threads = list()
+        for html in INC500_profiles:
+            threads += [threading.Thread(target=self.append_company_profile, args=(html,))]
         [thread.start() for thread in threads]
         [thread.join() for thread in threads]
 
