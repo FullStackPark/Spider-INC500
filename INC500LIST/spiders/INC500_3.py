@@ -98,6 +98,8 @@ class INC500_3:
             cs.company_schema['StateName'] = company['state_l']
         if 'yrs_on_list' in company:
             cs.company_schema['YearsOnINCList'] = company['yrs_on_list']
+
+            cs.company_schema['Partner'] = None
         for partner in company['partner_lists']:
             cs.company_schema['Partner'] += partner + " "
 
