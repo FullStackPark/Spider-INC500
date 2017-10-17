@@ -6,6 +6,7 @@ from scrapy.selector import Selector
 import logging
 import time
 import copy
+import threading
 
 output_companies = list()
 INC500_profiles = list()
@@ -73,69 +74,77 @@ class INC500_3:
 
         logging.info("Output Companies Initialization Succeed")
 
+    def extract_company(self, company):
+        global output_companies, INC500_profiles
+
+        cs = CompanySchema()
+        if 'id' in company:
+            cs.company_schema['CompanyID'] = company['id']
+        if 'rank' in company:
+            cs.company_schema['Ranking'] = company['rank']
+        if 'company' in company:
+            cs.company_schema['CompanyName'] = company['company']
+        if 'industry' in company:
+            cs.company_schema['Industry'] = company['industry']
+        if 'growth' in company:
+            cs.company_schema['Growth'] = company['growth']
+        if 'revenue' in company:
+            cs.company_schema['Revenue'] = company['revenue']
+        if 'city' in company:
+            cs.company_schema['City'] = company['city']
+        if 'state_s' in company:
+            cs.company_schema['StateAbbr'] = company['state_s']
+        if 'state_l' in company:
+            cs.company_schema['StateName'] = company['state_l']
+        if 'yrs_on_list' in company:
+            cs.company_schema['YearsOnINCList'] = company['yrs_on_list']
+        for partner in company['partner_lists']:
+            cs.company_schema['Partner'] += partner + " "
+
+        for wikipedia_detail in self.companies_info['wikipedias']:
+            if str(company['id']) == str(wikipedia_detail['company_id']):
+                cs.company_schema['WikipediaPage'] = str(company['url']) + '.html'
+                cs.company_schema['WikipediaURL'] = wikipedia_detail['wikipedia_url']
+
+        for html in INC500_profiles:
+            articles = Selector(text=html).xpath(self.xpath_article).extract()
+
+            for article in articles:
+                ranking = Selector(text=article).xpath(self.xpath_ranking).extract_first()
+                if ranking is not None:
+                    ranking = str(ranking).replace('#', '')
+
+                    if str(ranking) == str(company['rank']):
+                        print('mmp')
+                        cs.company_schema['BriefDescription'] = Selector(text=article).xpath(
+                            self.xpath_brief_description).extract_first()
+                        cs.company_schema['Description'] = Selector(text=article).xpath(
+                            self.xpath_description).extract_first()
+                        cs.company_schema['Leadership'] = Selector(text=article).xpath(
+                            self.xpath_leadership).extract_first()
+                        cs.company_schema['Founded'] = Selector(text=article).xpath(
+                            self.xpath_founded).extract_first()
+                        cs.company_schema['ThreeYearGrowth'] = Selector(text=article).xpath(
+                            self.xpath_3_year_growth).extract_first()
+                        cs.company_schema['Employees'] = Selector(text=article).xpath(
+                            self.xpath_employees).extract_first()
+                        cs.company_schema['Website'] = Selector(text=article).xpath(
+                            self.xpath_company_website).extract_first()
+                        cs.company_schema['Location'] = Selector(text=article).xpath(
+                            self.xpath_location).extract_first()
+
+        output_companies.append(copy.deepcopy(cs.company_schema))
+
+        # For Debug purpose
+        print(str(cs.company_schema['Ranking']) + "` " + "Finished information collecting stage")
+
     def start_extraction(self):
         """Initialize output companies according to the result of spider 1"""
+        threads = list()
         for company in self.companies:
-            cs = CompanySchema()
-            if 'id' in company:
-                cs.company_schema['CompanyID'] = company['id']
-            if 'rank' in company:
-                cs.company_schema['Ranking'] = company['rank']
-            if 'company' in company:
-                cs.company_schema['CompanyName'] = company['company']
-            if 'industry' in company:
-                cs.company_schema['Industry'] = company['industry']
-            if 'growth' in company:
-                cs.company_schema['Growth'] = company['growth']
-            if 'revenue' in company:
-                cs.company_schema['Revenue'] = company['revenue']
-            if 'city' in company:
-                cs.company_schema['City'] = company['city']
-            if 'state_s' in company:
-                cs.company_schema['StateAbbr'] = company['state_s']
-            if 'state_l' in company:
-                cs.company_schema['StateName'] = company['state_l']
-            if 'yrs_on_list' in company:
-                cs.company_schema['YearsOnINCList'] = company['yrs_on_list']
-            for partner in company['partner_lists']:
-                cs.company_schema['Partner'] += partner + " "
-
-            for wikipedia_detail in self.companies_info['wikipedias']:
-                if str(company['id']) == str(wikipedia_detail['company_id']):
-                    cs.company_schema['WikipediaPage'] = str(company['url']) + '.html'
-                    cs.company_schema['WikipediaURL'] = wikipedia_detail['wikipedia_url']
-
-            for html in INC500_profiles:
-                articles = Selector(text=html).xpath(self.xpath_article).extract()
-
-                for article in articles:
-                    ranking = Selector(text=article).xpath(self.xpath_ranking).extract_first()
-                    if ranking is not None:
-                        ranking = str(ranking).replace('#', '')
-
-                        if str(ranking) == str(company['rank']):
-                            print('mmp')
-                            cs.company_schema['BriefDescription'] = Selector(text=article).xpath(
-                                self.xpath_brief_description).extract_first()
-                            cs.company_schema['Description'] = Selector(text=article).xpath(
-                                self.xpath_description).extract_first()
-                            cs.company_schema['Leadership'] = Selector(text=article).xpath(
-                                self.xpath_leadership).extract_first()
-                            cs.company_schema['Founded'] = Selector(text=article).xpath(
-                                self.xpath_founded).extract_first()
-                            cs.company_schema['ThreeYearGrowth'] = Selector(text=article).xpath(
-                                self.xpath_3_year_growth).extract_first()
-                            cs.company_schema['Employees'] = Selector(text=article).xpath(
-                                self.xpath_employees).extract_first()
-                            cs.company_schema['Website'] = Selector(text=article).xpath(
-                                self.xpath_company_website).extract_first()
-                            cs.company_schema['Location'] = Selector(text=article).xpath(
-                                self.xpath_location).extract_first()
-
-            output_companies.append(copy.deepcopy(cs.company_schema))
-
-            # For Debug purpose
-            print(str(cs.company_schema['Ranking']) + "` " + "Finished information collecting stage")
+            threads += [threading.Thread(target=self.extract_company, args=(company))]
+        [thread.start() for thread in threads]
+        [thread.join() for thread in threads]
 
         f = open(file='temp/INC500_3.json', encoding='utf-8', mode='w')
         f.write(json.dumps(output_companies))
