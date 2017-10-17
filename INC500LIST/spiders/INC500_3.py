@@ -99,7 +99,7 @@ class INC500_3:
         if 'yrs_on_list' in company:
             cs.company_schema['YearsOnINCList'] = company['yrs_on_list']
 
-            cs.company_schema['Partner'] = None
+            cs.company_schema['Partner'] = str()
         for partner in company['partner_lists']:
             cs.company_schema['Partner'] += partner + " "
 
@@ -140,8 +140,11 @@ class INC500_3:
                         if Selector(text=article).xpath(
                             self.xpath_leadership).extract_first() == None:
                             print("Leadership None")
+
                         output_companies[index]['Leadership'] = Selector(text=article).xpath(
                             self.xpath_leadership).extract_first()
+                        print(Selector(text=article).xpath(
+                            self.xpath_leadership).extract_first())
 
                         if Selector(text=article).xpath(
                             self.xpath_founded).extract_first() == None:
