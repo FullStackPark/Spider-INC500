@@ -42,14 +42,17 @@ class INC500_3:
     global output_companies
 
     """These xpath are used to extract data from the Company Profile Page"""
-    xpath_brief_description = '//html/head/meta[1]/@content'
-    xpath_description = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article[1]//section[2]/div/p/text()'
-    xpath_leadership = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article[1]//section[1]/div[2]/dl[2]/dd/text()'
-    xpath_founded = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article[1]//section[1]/div[3]/dl[5]/dd/text()'
-    xpath_3_year_growth = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article[1]//section[1]/div[3]/dl[2]/dd/text()'
-    xpath_employees = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article[1]//section[1]/div[3]/dl[6]/dd/text()'
-    xpath_company_website = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article[1]//section[5]/dl/dd/a/@href'
-    xpath_location = '//html/head/title/text()'
+    xpath_article = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article'
+    xpath_ranking = '//section[1]/div[2]/dl[1]/dd/text()'
+
+    xpath_brief_description = '//div[1]/header/p/text()'
+    xpath_description = '//section[2]/div/p/text()'
+    xpath_leadership = '//section[1]/div[2]/dl[2]/dd/text()'
+    xpath_founded = '//section[1]/div[3]/dl[5]/dd/text()'
+    xpath_3_year_growth = '//section[1]/div[3]/dl[2]/dd/text()'
+    xpath_employees = '//section[1]/div[3]/dl[6]/dd/text()'
+    xpath_company_website = '//section[5]/dl/dd/a/@href'
+    xpath_location = '//section[1]/div[3]/dl[4]/dd/text()'
 
     def __init__(self):
         f = open(file='temp/INC500_1.json', encoding='utf-8', mode='r')
@@ -102,22 +105,30 @@ class INC500_3:
                     html = f.read()
                     f.close()
 
-                    if len(Selector(text=html).xpath(self.xpath_brief_description).extract()) > 0:
-                        cs.company_schema['BriefDescription'] = Selector(text=html).xpath(self.xpath_brief_description).extract()[0]
-                    if len(Selector(text=html).xpath(self.xpath_description).extract()) > 0:
-                        cs.company_schema['Description'] = Selector(text=html).xpath(self.xpath_description).extract()[0]
-                    if len(Selector(text=html).xpath(self.xpath_leadership).extract()) > 0:
-                        cs.company_schema['Leadership'] = Selector(text=html).xpath(self.xpath_leadership).extract()[0]
-                    if len(Selector(text=html).xpath(self.xpath_founded).extract()) > 0:
-                        cs.company_schema['Founded'] = Selector(text=html).xpath(self.xpath_founded).extract()[0]
-                    if len(Selector(text=html).xpath(self.xpath_3_year_growth).extract()) > 0:
-                        cs.company_schema['ThreeYearGrowth'] = Selector(text=html).xpath(self.xpath_3_year_growth).extract()[0]
-                    if len(Selector(text=html).xpath(self.xpath_employees).extract()) > 0:
-                        cs.company_schema['Employees'] = Selector(text=html).xpath(self.xpath_employees).extract()[0]
-                    if len(Selector(text=html).xpath(self.xpath_company_website).extract()) > 0:
-                        cs.company_schema['Website'] = Selector(text=html).xpath(self.xpath_company_website).extract()[0]
-                    if len(Selector(text=html).xpath(self.xpath_location).extract()) > 0:
-                        cs.company_schema['Location'] = Selector(text=html).xpath(self.xpath_location).extract()[0]
+                    articles = Selector(text=html).xpath(self.xpath_article).extract()
+
+                    for article in articles:
+                        ranking = Selector(text=article).xpath(self.xpath_ranking).extract_first()
+                        if ranking is not None:
+                            ranking = str(ranking).replace('#', '')
+
+                            if str(ranking) == str(company['rank']):
+                                cs.company_schema['BriefDescription'] = Selector(text=article).xpath(
+                                    self.xpath_brief_description).extract_first()
+                                cs.company_schema['Description'] = Selector(text=article).xpath(
+                                    self.xpath_description).extract_first()
+                                cs.company_schema['Leadership'] = Selector(text=article).xpath(
+                                    self.xpath_leadership).extract_first()
+                                cs.company_schema['Founded'] = Selector(text=article).xpath(
+                                    self.xpath_founded).extract_first()
+                                cs.company_schema['ThreeYearGrowth'] = Selector(text=article).xpath(
+                                    self.xpath_3_year_growth).extract_first()
+                                cs.company_schema['Employees'] = Selector(text=article).xpath(
+                                    self.xpath_employees).extract_first()
+                                cs.company_schema['Website'] = Selector(text=article).xpath(
+                                    self.xpath_company_website).extract_first()
+                                cs.company_schema['Location'] = Selector(text=article).xpath(
+                                    self.xpath_location).extract_first()
 
             output_companies.append(copy.deepcopy(cs.company_schema))
 
