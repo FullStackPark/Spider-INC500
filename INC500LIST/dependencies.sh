@@ -36,7 +36,7 @@ cd Python-3.6.2
 sudo make altinstall
 
 sudo pip3.6 -V
-sudo pip3.6 install -r requirment.txt
+sudo pip3.6 install -r ./requirment.txt
 
 sudo rm -rf Python-3.6.2 
 sudo rm -rf Python-3.6.2.tgz
