@@ -43,12 +43,12 @@ class INC500_3:
 
     """These xpath are used to extract data from the Company Profile Page"""
     xpath_brief_description = '//html/head/meta[1]/@content'
-    xpath_description = '//*[@id="company70866"]/section[2]/div[2]/p/text()'
-    xpath_leadership = '//*[@id="company70866"]/section[1]/div[2]/dl[2]/dd/text()'
-    xpath_founded = '//*[@id="company70866"]/section[1]/div[3]/dl[5]/dd/text()'
-    xpath_3_year_growth = '//*[@id="company70866"]/section[1]/div[3]/dl[2]/dd/text()'
-    xpath_employees = '//*[@id="company70866"]/section[1]/div[3]/dl[6]/dd/text()'
-    xpath_company_website = '//*[@id="company70866"]/section[5]/dl/dd/a/@href'
+    xpath_description = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article[1]//section[2]/div/p/text()'
+    xpath_leadership = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article[1]//section[1]/div[2]/dl[2]/dd/text()'
+    xpath_founded = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article[1]//section[1]/div[3]/dl[5]/dd/text()'
+    xpath_3_year_growth = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article[1]//section[1]/div[3]/dl[2]/dd/text()'
+    xpath_employees = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article[1]//section[1]/div[3]/dl[6]/dd/text()'
+    xpath_company_website = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article[1]//section[5]/dl/dd/a/@href'
     xpath_location = '//html/head/title/text()'
 
     def __init__(self):
