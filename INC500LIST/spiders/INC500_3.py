@@ -43,7 +43,7 @@ class INC500_3:
 
     """These xpath are used to extract data from the Company Profile Page"""
     xpath_article = '//*[@id="contentcontainer"]/section/div[2]/div/div/section/article'
-    xpath_ranking = '//section[1]/div[2]/dl[1]/dd/text()'
+    xpath_ranking = '//div[1]/div[1]/section[1]/section[1]/div[2]/dl[@class="rank"]/dd/text()'
 
     xpath_brief_description = '//div[1]/header/p/text()'
     xpath_description = '//section[2]/div/p/text()'
