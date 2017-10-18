@@ -54,7 +54,13 @@ Results are placed inside the `output` folder.
 Tested on Ubuntu-16.04 x64.
 
 ## Screenshots
-
+![1](https://raw.githubusercontent.com/XetRAHF/Scrapping-INC500/master/IMGS/1.png)
+![2](https://raw.githubusercontent.com/XetRAHF/Scrapping-INC500/master/IMGS/2.png)
+![3](https://raw.githubusercontent.com/XetRAHF/Scrapping-INC500/master/IMGS/3.png)
+![4](https://raw.githubusercontent.com/XetRAHF/Scrapping-INC500/master/IMGS/4.png)
+![5](https://raw.githubusercontent.com/XetRAHF/Scrapping-INC500/master/IMGS/5.png)
+![6](https://raw.githubusercontent.com/XetRAHF/Scrapping-INC500/master/IMGS/6.png)
+![7](https://raw.githubusercontent.com/XetRAHF/Scrapping-INC500/master/IMGS/7.png)
 
 ## Contact
 
