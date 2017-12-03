@@ -62,16 +62,6 @@ Tested on Ubuntu-16.04 x64.
 ![6](https://raw.githubusercontent.com/XetRAHF/Scrapping-INC500/master/IMGS/6.png)
 ![7](https://raw.githubusercontent.com/XetRAHF/Scrapping-INC500/master/IMGS/7.png)
 
-## Contact
-
--  Mailing me for support: ```zerqqr1@iydhp.com```
--  Connect me on wechat: ```ITXSG_HF```
-
-## Acknowledgments
-- My Partner - ZePing Bai - Technology Support - Connect him on QQ by QR:
-![ZePing Bai](https://raw.githubusercontent.com/XetRAHF/Scrapping-INC500/master/IMGS/zepingbai.jpg)
-- Join our QQ technology forum: ```560956108```
-
 ## Computer Requirment
 > This is a high-requirement project, you can not run it on a 10-years old Linux Computer with poor internet connection
 > You may need 12 hours to run the project.
