@@ -39,6 +39,8 @@ cd Scrapping-INC500/INC500LIST/
 ### Install Dependencies:
 > We will compile and reinstall Python3
 
+[Windows 安装 Python 和 PIP3](https://www.cnblogs.com/yuanzm/p/4089856.html)
+
 ```
 pip3 install -r requirment.txt
 ```
